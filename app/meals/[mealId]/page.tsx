@@ -7,7 +7,7 @@ type PageProps = {
 };
 
 async function Page({ params }: PageProps) {
-  const { mealId } = await params;
+  const { mealId } = params;
   console.log(params);
 
   return <div>{mealId}</div>;
