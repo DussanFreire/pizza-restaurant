@@ -1,6 +1,5 @@
 import React from "react";
 import classes from "./meals-grid.module.css";
-import { MealInterface } from "@/Interfaces/meal.inteface";
 import MealItem from "./meal-item";
 
 interface Props {

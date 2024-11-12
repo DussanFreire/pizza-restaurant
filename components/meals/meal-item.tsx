@@ -2,7 +2,6 @@ import Link from "next/link";
 import Image from "next/image";
 
 import classes from "./meal-item.module.css";
-import { MealInterface } from "@/Interfaces/meal.inteface";
 
 export default function MealItem({
   title,
@@ -15,7 +14,7 @@ export default function MealItem({
     <article className={classes.meal}>
       <header>
         <div className={classes.image}>
-          <Image src={image} alt={title} fill />
+          <Image quality={100} src={image} alt={title} fill />
         </div>
         <div className={classes.headerText}>
           <h2>{title}</h2>
