@@ -9,7 +9,10 @@ function isInvalid(text: string) {
   return !text || !text.trim();
 }
 
-export async function shareMeal(_prevState: {}, formData: FormData) {
+export async function shareMeal(
+  _prevState: { message: string },
+  formData: FormData
+) {
   const meal: MealInterface = {
     title: formData.get("title") as string,
     image: formData.get("image") as File,
