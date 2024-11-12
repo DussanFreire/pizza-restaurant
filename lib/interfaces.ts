@@ -1,11 +1,10 @@
 interface MealInterface {
-  id: string;
+  id?: string;
   instructions: string;
   title: string;
-  image: string;
-  creatorMeal: string;
+  image: string | File;
+  creator_email: string;
   creator: string;
   summary: string;
-  creator_email: string;
-  slug: string;
+  slug?: string;
 }

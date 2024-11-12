@@ -14,7 +14,7 @@ export default function MealItem({
     <article className={classes.meal}>
       <header>
         <div className={classes.image}>
-          <Image quality={100} src={image} alt={title} fill />
+          <Image quality={100} src={image as string} alt={title} fill />
         </div>
         <div className={classes.headerText}>
           <h2>{title}</h2>
