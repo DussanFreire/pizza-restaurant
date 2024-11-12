@@ -5,9 +5,9 @@ import classes from "./page.module.css";
 import { MealInterface } from "@/lib/interfaces";
 
 type PageProps = {
-  params: {
+  params: Promise<{
     mealId: string;
-  };
+  }>;
 };
 
 export async function generateMetadata({ params }: PageProps) {
