@@ -6,5 +6,4 @@ interface MealInterface {
   creator_email: string;
   creator: string;
   summary: string;
-  slug?: string;
 }

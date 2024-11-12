@@ -5,7 +5,7 @@ import classes from "./meal-item.module.css";
 
 export default function MealItem({
   title,
-  slug,
+  id,
   image,
   summary,
   creator,
@@ -24,7 +24,7 @@ export default function MealItem({
       <div className={classes.content}>
         <p className={classes.summary}>{summary}</p>
         <div className={classes.actions}>
-          <Link href={`/meals/${slug}`}>View Details</Link>
+          <Link href={`/meals/${id}`}>View Details</Link>
         </div>
       </div>
     </article>

@@ -11,13 +11,18 @@
   }
 }
 
+@media (max-width: 520px) {
+  .logo {
+    display: none !important;
+  }
+}
+
 .nav ul {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   gap: 1.5rem;
-  /* font-family: 'Montserrat', sans-serif; */
   font-size: 1.25rem;
 }
 
@@ -29,7 +34,7 @@
   text-decoration: none;
   color: #ddd6cb;
   font-weight: bold;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   letter-spacing: 0.15rem;
   text-transform: uppercase;
   font-size: 1.5rem;

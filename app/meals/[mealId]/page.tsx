@@ -8,10 +8,24 @@ type PageProps = {
     mealId: string;
   };
 };
+
+export async function generateMetadata({ params }: PageProps) {
+  const { mealId } = await params;
+  const meal: MealInterface = await getMeal(mealId);
+
+  if (!meal) {
+    notFound();
+  }
+
+  return {
+    title: meal.title,
+    description: meal.summary,
+  };
+}
 async function Page({ params }: PageProps) {
   const { mealId } = await params;
 
-  const meal: MealInterface = getMeal(mealId);
+  const meal: MealInterface = await getMeal(mealId);
   if (!meal) notFound();
   const formattedInstructions = meal.instructions.replaceAll(/\n/g, "<br/>");
 

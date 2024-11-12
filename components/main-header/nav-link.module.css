@@ -4,6 +4,8 @@
   font-weight: bold;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
+  display: flex;
+  justify-content: center;
 }
 
 .link:hover,
@@ -20,4 +22,6 @@
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  display: flex;
+  justify-content: center;
 }

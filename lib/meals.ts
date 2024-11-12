@@ -1,48 +1,54 @@
-import sql from "better-sqlite3";
-import slugify from "slugify";
-import xss from "xss";
-import fs from "node:fs";
-import stream from "stream";
-const db = sql("meals.db");
+import { supabase, supabaseUrl } from "./supabase";
+const TABLE_NAME = "meals";
 
 export async function getMeals(): Promise<MealInterface[]> {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-  return db.prepare("SELECT * FROM meals").all() as MealInterface[];
+  const { data: meals, error } = await supabase.from(TABLE_NAME).select("*");
+  if (error) {
+    console.error(error);
+    throw new Error("Meals could not be loaded");
+  }
+  return meals as MealInterface[];
 }
-
-export function getMeal(id: string): MealInterface {
-  return db
-    .prepare("SELECT * FROM meals WHERE slug = ?")
-    .get(id) as MealInterface;
+export async function getMeal(id: string): Promise<MealInterface> {
+  const { data: meal, error } = await supabase
+    .from(TABLE_NAME)
+    .select("*")
+    .eq("id", id)
+    .single();
+  if (error) {
+    console.error(error);
+    throw new Error("Meals could not be loaded");
+  }
+  return meal as MealInterface;
 }
 
 export async function saveMeal(meal: MealInterface) {
-  const FOLDER_PATH = "public/images";
-  meal.slug = slugify(meal.title, { lower: true });
-  meal.instructions = xss(meal.instructions);
-  const imageFile = meal.image as File;
-  const extension = imageFile.name.split(".").pop();
-  const fileName = `${crypto.randomUUID()}-${meal.slug}.${extension}`;
-  const stream = fs.createWriteStream(`${FOLDER_PATH}/${fileName}`);
-  const bufferedImage = await imageFile.arrayBuffer();
-  stream.write(Buffer.from(bufferedImage), (error) => {
-    if (error) {
-      throw new Error("Saving image failed");
-    }
-  });
-  meal.image = `/images/${fileName}`;
-  db.prepare(
-    `
-    INSERT INTO meals (title, summary, instructions, creator, creator_email, image, slug)
-    VALUES (
-      @title,
-      @summary,
-      @instructions,
-      @creator,
-      @creator_email,
-      @image,
-      @slug
-    )
-  `
-  ).run(meal);
+  const imageName = `${Math.random()}-${(meal.image as File).name}`
+    .replaceAll("/", "")
+    .replaceAll(" ", "")
+    .replaceAll(" ", "");
+  const imagePath = `${supabaseUrl}/storage/v1/object/public/meal/${imageName}`;
+
+  const query = supabase
+    .from(TABLE_NAME)
+    .insert([{ ...meal, image: imagePath }]);
+  const { data, error } = await query.select().single();
+
+  if (error) {
+    console.error(error);
+    throw new Error("Meal could not be created");
+  }
+
+  const { error: storageError } = await supabase.storage
+    .from("meal")
+    .upload(imageName, meal.image);
+
+  if (storageError) {
+    await supabase.from(TABLE_NAME).delete().eq("id", data.id);
+    console.log(storageError);
+    throw new Error(
+      "Meal image could not be uploaded and the meal was not created"
+    );
+  }
+  return data;
 }
