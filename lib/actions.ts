@@ -2,7 +2,6 @@
 
 import { redirect } from "next/navigation";
 import { saveMeal } from "./meals";
-import { supabase } from "./supabase";
 import { revalidatePath } from "next/cache";
 import { MealInterface } from "./interfaces";
 
