@@ -1,5 +1,6 @@
 import { MealInterface } from "./interfaces";
-import { supabase, supabaseUrl } from "./supabase";
+import { supabase } from "./supabase";
+
 const TABLE_NAME = "meals";
 
 export async function getMeals(): Promise<MealInterface[]> {
@@ -28,7 +29,7 @@ export async function saveMeal(meal: MealInterface) {
     .replaceAll("/", "")
     .replaceAll(" ", "")
     .replaceAll(" ", "");
-  const imagePath = `${supabaseUrl}/storage/v1/object/public/meal/${imageName}`;
+  const imagePath = `${process.env.SUPABASE_URL}/storage/v1/object/public/meal/${imageName}`;
 
   const query = supabase
     .from(TABLE_NAME)
