@@ -1,3 +1,4 @@
+"use server";
 import { MealInterface } from "./interfaces";
 import { supabase } from "./supabase";
 
