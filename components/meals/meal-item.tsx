@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import classes from "./meal-item.module.css";
+import { MealInterface } from "@/lib/interfaces";
 
 export default function MealItem({
   title,

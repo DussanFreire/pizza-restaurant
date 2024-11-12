@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { saveMeal } from "./meals";
 import { revalidatePath } from "next/cache";
+import { MealInterface } from "./interfaces";
 
 function isInvalid(text: string) {
   return !text || !text.trim();

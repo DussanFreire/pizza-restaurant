@@ -1,3 +1,4 @@
+import { MealInterface } from "./interfaces";
 import { supabase, supabaseUrl } from "./supabase";
 const TABLE_NAME = "meals";
 
